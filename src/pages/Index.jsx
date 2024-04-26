@@ -1,17 +1,25 @@
 import { Box, Input, Select, VStack, Heading, Text, Button, Flex, Spacer, Image, SimpleGrid } from "@chakra-ui/react";
 import { FaSearch, FaSortAmountDown, FaInstagram, FaYoutube, FaSnapchatGhost, FaTiktok } from "react-icons/fa";
 
+import { useState } from "react";
+
 const Index = () => {
+  const [showResults, setShowResults] = useState(false);
+
+  const handleSearch = () => {
+    setShowResults(true);
+  };
+
   return (
     <Box p={5}>
       <VStack spacing={5}>
         <Heading>Influencer Discovery Platform</Heading>
-        <Text>Discover top influencers across various social media platforms</Text>
+        <Text>Find the best influencers for your marketing needs</Text>
 
         <Flex w="full">
           <Input placeholder="Search influencers" size="md" />
-          <Button ml={2} leftIcon={<FaSearch />}>
-            Search
+          <Button ml={2} leftIcon={<FaSearch />} onClick={handleSearch}>
+            Show Results
           </Button>
         </Flex>
 
@@ -30,18 +38,20 @@ const Index = () => {
           </Select>
         </Flex>
 
-        <SimpleGrid columns={3} spacing={10}>
-          {influencers.map((influencer) => (
-            <Box key={influencer.id} p={5} shadow="md" borderWidth="1px">
-              <Image src={influencer.image} alt={influencer.name} />
-              <Text mt={2} fontSize="xl" fontWeight="bold">
-                {influencer.name}
-              </Text>
-              <Text>{influencer.platform}</Text>
-              <Text>{`${influencer.followers} followers`}</Text>
-            </Box>
-          ))}
-        </SimpleGrid>
+        {showResults && (
+          <SimpleGrid columns={3} spacing={10}>
+            {influencers.map((influencer) => (
+              <Box key={influencer.id} p={5} shadow="md" borderWidth="1px">
+                <Image src={influencer.image} alt={influencer.name} />
+                <Text mt={2} fontSize="xl" fontWeight="bold">
+                  {influencer.name}
+                </Text>
+                <Text>{influencer.platform}</Text>
+                <Text>{`${influencer.followers} followers`}</Text>
+              </Box>
+            ))}
+          </SimpleGrid>
+        )}
       </VStack>
     </Box>
   );
